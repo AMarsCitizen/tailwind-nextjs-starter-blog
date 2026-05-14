@@ -1,0 +1,156 @@
+repo:
+  name: AMarsCitizen/tailwind-nextjs-starter-blog
+  purpose: Professional content-only portfolio launch for Wahbi Hamza
+  base_template: tailwind-nextjs-starter-blog
+  launch_mode: content_only_4_hour_sprint
+  default_branch: main
+  package_manager: yarn
+  package_manager_version: "3.6.1"
+  node_framework: Next.js
+  design_rule: "Do not redesign. Preserve the template structure and visual language."
+
+commands:
+  install: "yarn install --immutable"
+  dev: "yarn dev"
+  build: "yarn build"
+  lint: "yarn lint"
+  serve: "yarn serve"
+
+stack:
+  app_framework: "Next.js 15"
+  ui: "React 19"
+  styling: "Tailwind CSS 4"
+  content: "Contentlayer2 / next-contentlayer2"
+  mdx: true
+  utilities: "Pliny"
+
+critical_files:
+  site_metadata:
+    path: data/siteMetadata.js
+    purpose: "Global site identity, SEO metadata, author/social links, search/newsletter/comments config."
+    launch_action: "Replace starter identity with Wahbi Hamza identity and remove/blank irrelevant starter social placeholders."
+    risk: low
+  nav:
+    path: data/headerNavLinks.ts
+    purpose: "Top navigation links."
+    launch_action: "Simplify to Home, Case Studies, About. Hide Tags and Projects unless content is ready."
+    risk: low
+  homepage_route:
+    path: app/page.tsx
+    purpose: "Loads all blog posts and passes them to app/Main.tsx."
+    launch_action: "Avoid editing unless necessary."
+    risk: medium
+  homepage_component:
+    path: app/Main.tsx
+    purpose: "Homepage content and latest post rendering."
+    launch_action: "Replace generic starter 'Latest' content with professional landing copy while preserving simple existing layout patterns."
+    risk: medium
+  about_route:
+    path: app/about/page.tsx
+    purpose: "Renders author MDX profile using AuthorLayout."
+    launch_action: "Do not edit unless required."
+    risk: low
+  author_profile:
+    path: data/authors/default.mdx
+    purpose: "About page content and author frontmatter."
+    launch_action: "Replace starter author with Wahbi Hamza profile and concise professional About content."
+    risk: low
+  blog_content:
+    path: data/blog/**/*.mdx
+    purpose: "MDX posts, used for blog/case studies."
+    launch_action: "Create 3-4 SAP/procurement case-study posts. Use tags to classify."
+    risk: low
+  projects_page:
+    path: app/projects/page.tsx
+    purpose: "Optional project-card page."
+    launch_action: "Avoid relying on it for launch unless quickly repurposed as Selected Work."
+    risk: medium
+  projects_data:
+    path: data/projectsData.*
+    purpose: "Project card data consumed by app/projects/page.tsx."
+    launch_action: "Optional. Edit only if Projects remains in nav."
+    risk: low
+  contentlayer_config:
+    path: contentlayer.config.ts
+    purpose: "Defines Blog and Authors document types, computed fields, search index and tag generation."
+    launch_action: "Do not change for launch. Use existing Blog type for case studies."
+    risk: high
+  seo:
+    path: app/seo.*
+    purpose: "Metadata generation utilities."
+    launch_action: "Do not change unless build requires it."
+    risk: medium
+
+content_model:
+  blog_document_type:
+    source: data/blog/**/*.mdx
+    required_frontmatter:
+      - title
+      - date
+    optional_frontmatter:
+      - tags
+      - summary
+      - draft
+      - images
+      - authors
+      - layout
+      - canonicalUrl
+    launch_usage: "Use as case-study content type without changing schema."
+  author_document_type:
+    source: data/authors/**/*.mdx
+    launch_usage: "Use default author as About page content."
+
+routes:
+  home:
+    url: /
+    component: app/Main.tsx
+    launch_goal: "Professional landing page that explains Wahbi within 10 seconds."
+  case_studies:
+    url: /blog
+    component: existing blog listing
+    launch_goal: "Visible nav label should be Case Studies. Route may remain /blog for safety."
+  about:
+    url: /about
+    component: app/about/page.tsx + data/authors/default.mdx
+    launch_goal: "HR-friendly narrative profile."
+  tags:
+    url: /tags
+    launch_goal: "Can remain available but remove from main nav for launch."
+  projects:
+    url: /projects
+    launch_goal: "Optional. Hide from nav unless polished."
+
+launch_content_priority:
+  p0:
+    - update metadata and starter identity
+    - simplify navigation
+    - update About page
+    - update homepage copy
+    - create at least 3 SAP/procurement case-study MDX posts
+    - run build
+  p1:
+    - create fourth SAP case study
+    - lightly repurpose projects page if needed
+    - add CV link if PDF is intentionally placed in public/static and approved
+  p2:
+    - add Leyton/R&D use cases
+    - add additional writing notes
+    - add /case-studies route alias
+
+forbidden_changes:
+  - redesign
+  - new dependencies
+  - new CMS
+  - new Contentlayer document types
+  - route refactor
+  - image-heavy layouts
+  - public raw CV PDFs without approval
+  - internal/private client links
+  - private phone number exposure by default
+  - invented metrics
+
+quality_gates:
+  build: "yarn build must pass before launch."
+  identity: "No starter names such as Tails Azimuth, TailwindBlog, Next.js Starter Blog should remain in visible content."
+  confidentiality: "No raw client documents, internal URLs, or private stakeholder names."
+  tone: "Professional SAP/procurement/AMOA/data automation tone, not student portfolio."
