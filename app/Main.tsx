@@ -105,7 +105,7 @@ export default function Home({ posts }) {
           </div>
           <div className="flex justify-center md:justify-end">
             <Image
-              src="/static/images/avatar.png"
+              src="/static/images/wahbi.png"
               alt="Wahbi Hamza"
               width={220}
               height={220}
